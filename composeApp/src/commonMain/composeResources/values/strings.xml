@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="test">Test</string>
+    <string name="registration_number">Registration number</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="enter_ur_pwd">Enter your password</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="item_name">Item Name</string>
+    <string name="weight_gram">Weight (grams)</string>
+    <string name="weight_24_gram">Weight according to 24k (grams)</string>
+    <string name="amount">Amount</string>
+    <string name="amount_received">Amount received (SAR)</string>
+    <string name="date">Date</string>
+    <string name="invoice_number">Invoice number</string>
+    <string name="title">Title</string>
+    <string name="company">Company</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="customer_address">Customer address</string>
+</resources>
