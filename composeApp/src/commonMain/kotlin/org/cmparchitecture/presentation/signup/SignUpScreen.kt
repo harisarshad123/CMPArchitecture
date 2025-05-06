@@ -188,7 +188,7 @@ fun SignUpScreen(
 
             Spacer(Modifier.height(5.dp))
             SignUpText(onSigninClick = {
-                actionEvent.invoke(SignupViewModel.ActionEvent.OnSignUpClick)
+                actionEvent.invoke(SignupViewModel.ActionEvent.OnAlreadyAccountClick)
             })
         }
     }
