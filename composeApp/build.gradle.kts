@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-
+    id("com.google.gms.google-services")
     kotlin("plugin.serialization")
 
 }
@@ -94,6 +94,8 @@ kotlin {
 
             implementation("com.russhwolf:multiplatform-settings:1.0.0")
             implementation("com.russhwolf:multiplatform-settings-coroutines:1.0.0") // For suspend functions
+
+            implementation(libs.firebase.auth)
 
         }
         desktopMain.dependencies {

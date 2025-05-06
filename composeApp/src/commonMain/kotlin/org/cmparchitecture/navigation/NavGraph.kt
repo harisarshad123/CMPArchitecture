@@ -11,8 +11,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.cmparchitecture.presentation.dashboard.DashboardScreen
 import org.cmparchitecture.presentation.dashboard.DashboardViewModel
+import org.cmparchitecture.presentation.dashboard.SignUpScreen
+import org.cmparchitecture.presentation.signin.SignInScreen
+import org.cmparchitecture.presentation.signin.SignInViewModel
+import org.cmparchitecture.presentation.splash.SplashScreen
+import org.cmparchitecture.presentation.splash.SplashViewModel
+import org.cmparchitecture.presentation.welcomesreen.WelcomeScreen
+import org.cmparchitecture.presentation.welcomesreen.WelcomeScreenViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -23,7 +29,7 @@ fun SetUpNavGraph(
         modifier = Modifier.fillMaxSize()
             .background(color = Color.White),
         navController = navController,
-        startDestination = Route.DashboardDisplay,
+        startDestination = Route.SignIn,
 
         enterTransition = {
             slideIntoContainer(
@@ -50,10 +56,63 @@ fun SetUpNavGraph(
             )
         }
     ) {
-        composable<Route.DashboardDisplay> {
+        composable<Route.SignUpDisplay> {
             val viewModel = koinViewModel<DashboardViewModel>()
-            DashboardScreen(
-                state = viewModel.state
+            SignUpScreen(
+                state = viewModel.state,
+                actionEvent = viewModel::actionEvent,
+                navigation = {
+                    handleNavigation(
+                        action = it,
+                        navController = navController
+                    )
+                },
+                baseUIEvents = viewModel.baseUIEvents
+            )
+        }
+
+        composable<Route.SignIn> {
+            val viewModel = koinViewModel<SignInViewModel>()
+            SignInScreen(
+                state = viewModel.state,
+                actionEvent = viewModel::actionEvent,
+                navigation = {
+                    handleNavigation(
+                        action = it,
+                        navController = navController
+                    )
+                },
+                baseUIEvents = viewModel.baseUIEvents
+            )
+        }
+
+        composable<Route.WelcomeScreen> {
+            val viewModel = koinViewModel<WelcomeScreenViewModel>()
+            WelcomeScreen(
+                state = viewModel.state,
+                actionEvent = viewModel::actionEvent,
+                navigation = {
+                    handleNavigation(
+                        action = it,
+                        navController = navController
+                    )
+                },
+                baseUIEvents = viewModel.baseUIEvents
+            )
+        }
+
+        composable<Route.SplashDisplay> {
+            val viewModel = koinViewModel<SplashViewModel>()
+            SplashScreen(
+                state = viewModel.state,
+                actionEvent = viewModel::actionEvent,
+                navigation = {
+                    handleNavigation(
+                        action = it,
+                        navController = navController
+                    )
+                },
+                baseUIEvents = viewModel.baseUIEvents,
             )
         }
     }

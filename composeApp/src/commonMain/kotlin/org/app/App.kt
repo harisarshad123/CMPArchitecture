@@ -52,7 +52,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import goldmang.utils.bottomnav.handleBottomNavAndFabVisibility
+import org.cmparchitecture.utils.bottomnav.handleBottomNavAndFabVisibility
 import org.cmparchitecture.navigation.Route
 import org.cmparchitecture.navigation.SetUpNavGraph
 import org.cmparchitecture.utils.bottomnav.bottomNavigationItems

@@ -1,4 +1,4 @@
-package org.cmparchitecture.presentation.dashboard
+package org.cmparchitecture.presentation.signin
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,10 +11,9 @@ import org.cmparchitecture.navigation.NavigationAction
 import org.cmparchitecture.navigation.Route
 import org.core.presentation.base.BaseViewModel
 
-class DashboardViewModel(private val repo: AuthRepo) : BaseViewModel() {
-    var state by mutableStateOf(DashboardScreenState())
+class SignInViewModel(private val repo: AuthRepo) : BaseViewModel() {
+    var state by mutableStateOf(SignInScreenState())
         private set
-
 
     fun actionEvent(actionEvent: ActionEvent) {
         when (actionEvent) {
@@ -26,61 +25,43 @@ class DashboardViewModel(private val repo: AuthRepo) : BaseViewModel() {
                 state = state.copy(password = actionEvent.password)
             }
 
-            is ActionEvent.OnCPasswordChange -> {
-                state = state.copy(cPassword = actionEvent.cPassword)
-            }
-
             is ActionEvent.TogglePasswordVisibility -> {
                 state = state.copy(passwordVisible = !state.passwordVisible)
             }
 
-            is ActionEvent.ToggleCPasswordVisibility -> {
-                state = state.copy(cPasswordVisible = !state.cPasswordVisible)
-            }
-
+            is ActionEvent.OnSignInClick -> signIn()
             is ActionEvent.OnSignUpClick -> {
-                signUp()
-            }
-
-            is ActionEvent.OnAlreadyAccountClick -> {
-                navigate(NavigationAction.PopBackStack)
+                navigate(NavigationAction.NavigateTo(Route.SignUpDisplay))
             }
         }
     }
 
-    private fun signUp() {
-        if (
-            state.email.text.isNotEmpty() &&
-            state.password.text.isNotEmpty() &&
-            state.cPassword.text.isNotEmpty() &&
-            state.password.text == state.cPassword.text
-        ) {
+    private fun signIn() {
+        if (state.email.text.isNotEmpty() && state.password.text.isNotEmpty()) {
             viewModelScope.launch {
-                val isSuccess = repo.signupWithEmail(state.email.text, state.password.text)
+                val isSuccess = repo.signInWithEmail(state.email.text, state.password.text)
                 if (isSuccess) {
                     navigate(
                         NavigationAction.NavigateTo(
-                            Route.WelcomeScreen,
+                            Route.SignUpDisplay,
                             clearBackStack = true
                         )
                     )
-                    showToast("Sign Up Successful")
+                    showToast("Signed in successfully")
                 } else {
-                    showToast("Sign Up Failed")
+                    showToast("Invalid email or password")
                 }
             }
         } else {
-            showToast("Sign Up Failed")
+            showToast("Email and password cannot be empty")
         }
     }
 
     sealed class ActionEvent {
         data class OnEmailChange(val email: TextFieldValue) : ActionEvent()
         data class OnPasswordChange(val password: TextFieldValue) : ActionEvent()
-        data class OnCPasswordChange(val cPassword: TextFieldValue) : ActionEvent()
         data object TogglePasswordVisibility : ActionEvent()
-        data object ToggleCPasswordVisibility : ActionEvent()
+        data object OnSignInClick : ActionEvent()
         data object OnSignUpClick : ActionEvent()
-        data object OnAlreadyAccountClick : ActionEvent()
     }
 }

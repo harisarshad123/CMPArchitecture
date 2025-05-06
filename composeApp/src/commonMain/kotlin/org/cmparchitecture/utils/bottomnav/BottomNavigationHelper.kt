@@ -1,4 +1,4 @@
-package goldmang.utils.bottomnav
+package org.cmparchitecture.utils.bottomnav
 
 import org.cmparchitecture.utils.bottomnav.DefaultBottomNavVisibilityHandler
 import org.cmparchitecture.utils.bottomnav.DefaultFabButtonVisibilityHandler

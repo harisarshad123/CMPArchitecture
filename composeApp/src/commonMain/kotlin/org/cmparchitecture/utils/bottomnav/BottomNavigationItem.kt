@@ -17,7 +17,7 @@ val bottomNavigationItems = listOf(
         text = "Dashboard",
         icon = Res.drawable.compose_multiplatform,
         selectedIcon = Res.drawable.compose_multiplatform,
-        route = Route.DashboardDisplay,
+        route = Route.SignIn,
     ),
 //
 //    BottomNavigationItem(
