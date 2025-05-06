@@ -1,11 +1,11 @@
-package org.core.theme.extensions
+package org.cmparchitecture.utils.extensions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.core.theme.config.ThemeConfig
+import org.cmparchitecture.utils.config.ThemeConfig
 import kotlin.math.sqrt
 
 

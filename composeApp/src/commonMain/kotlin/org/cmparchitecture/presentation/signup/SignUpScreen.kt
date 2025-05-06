@@ -1,4 +1,4 @@
-package org.cmparchitecture.presentation.signin
+package org.cmparchitecture.presentation.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,48 +21,55 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cmparchitecture.composeapp.generated.resources.Res
-import cmparchitecture.composeapp.generated.resources.don_t_have_account
 import cmparchitecture.composeapp.generated.resources.ic_facebook
 import cmparchitecture.composeapp.generated.resources.ic_google
 import cmparchitecture.composeapp.generated.resources.ic_visibility
 import cmparchitecture.composeapp.generated.resources.ic_visibility_off
 import cmparchitecture.composeapp.generated.resources.icons8_apple
-import cmparchitecture.composeapp.generated.resources.sign_up
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import org.cmparchitecture.navigation.NavigationAction
 import org.cmparchitecture.presentation.component.BaseTextField
-import org.cmparchitecture.presentation.signin.component.SocialButton
-import org.cmparchitecture.utils.sdp
-import org.cmparchitecture.utils.ssp
+import org.cmparchitecture.presentation.signup.component.GenderRadio
+import org.cmparchitecture.presentation.signup.component.SignUpText
+import org.cmparchitecture.presentation.signup.component.SocialButton
+import org.cmparchitecture.presentation.signup.component.TermsAndConditionsText
 import org.core.presentation.base.BaseScreen
 import org.core.presentation.base.BaseViewModel
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun SignInScreen(
-    state: SignInScreenState = SignInScreenState(),
+fun SignUpScreen(
+    state: SignupScreenState = SignupScreenState(),
     navigation: (NavigationAction) -> Unit = {},
-    actionEvent: (SignInViewModel.ActionEvent) -> Unit = {},
+    actionEvent: (SignupViewModel.ActionEvent) -> Unit = {},
     baseUIEvents: SharedFlow<BaseViewModel.BaseViewModelEvents> = MutableSharedFlow()
 ) {
     BaseScreen(
         baseUIEvents = baseUIEvents,
         navigation = navigation
     ){
+        var gender by remember { mutableStateOf("Male") }
 
         val scrollState = rememberScrollState()
 
@@ -87,40 +94,44 @@ fun SignInScreen(
 
             Spacer(Modifier.height(16.dp))
 
-            Text(text = state.title, fontSize = 28.sp, fontWeight = FontWeight.Bold)
-
+            Text("Sign up", fontSize = 28.sp, fontWeight = FontWeight.Bold)
             Spacer(Modifier.padding(top = 10.dp))
             Text("1M+ people choose us. Join now!", fontSize = 14.sp, color = Color.Gray)
 
             Spacer(Modifier.height(16.dp))
-            Text("Or, you can sign in by:", color = Color.Gray)
+            Text("Or, you can sign up by:", color = Color.Gray)
 
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                SocialButton(icon = painterResource(Res.drawable.ic_google), "G")  // Google
+                SocialButton(
+                    icon = painterResource(Res.drawable.ic_google),
+                    "G"
+                )
                 SocialButton(
                     icon = painterResource(Res.drawable.ic_facebook),
                     "F"
-                )  // Facebook
-                SocialButton(icon = painterResource(Res.drawable.icons8_apple), "A")  // Apple
+                )
+                SocialButton(
+                    icon = painterResource(Res.drawable.icons8_apple),
+                    "A"
+                )
             }
 
             Spacer(Modifier.height(24.dp))
             BaseTextField(
                 value = state.email,
-                onValueChange = { actionEvent.invoke(SignInViewModel.ActionEvent.OnEmailChange(it)) },
+                onValueChange = { actionEvent.invoke(SignupViewModel.ActionEvent.OnEmailChange(it)) },
                 label = { Text("Enter Email") },
                 visualTransformation = VisualTransformation.None
             )
-
             Spacer(Modifier.height(12.dp))
             BaseTextField(
                 value = state.password,
-                onValueChange = { actionEvent.invoke(SignInViewModel.ActionEvent.OnPasswordChange(it)) },
+                onValueChange = { actionEvent.invoke(SignupViewModel.ActionEvent.OnPasswordChange(it)) },
                 label = { Text("Enter Password") },
                 visualTransformation = if (state.passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
-                    IconButton(onClick = { actionEvent.invoke(SignInViewModel.ActionEvent.TogglePasswordVisibility) }) {
+                    IconButton(onClick = { actionEvent.invoke(SignupViewModel.ActionEvent.TogglePasswordVisibility) }) {
                         Icon(
                             painter = painterResource(
                                 if (state.passwordVisible) Res.drawable.ic_visibility
@@ -132,41 +143,54 @@ fun SignInScreen(
                 }
             )
 
-            Spacer(Modifier.height(15.dp))
-            Button(
-                onClick = { actionEvent.invoke(SignInViewModel.ActionEvent.OnSignInClick) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF6B5F))
-            ) {
-                Text("Sign In", color = Color.White, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(12.dp))
+            BaseTextField(
+                value = state.cPassword,
+                onValueChange = { actionEvent.invoke(
+                    SignupViewModel.ActionEvent.OnCPasswordChange(
+                        it
+                    )
+                ) },
+                label = { Text("Confirm Password") },
+                visualTransformation = if (state.cPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { actionEvent.invoke(SignupViewModel.ActionEvent.ToggleCPasswordVisibility) }) {
+                        Icon(
+                            painter = painterResource(
+                                if (state.cPasswordVisible) Res.drawable.ic_visibility
+                                else Res.drawable.ic_visibility_off
+                            ),
+                            contentDescription = if (state.cPasswordVisible) "Hide password" else "Show password"
+                        )
+                    }
+                }
+            )
+
+            Spacer(Modifier.height(12.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                GenderRadio("Male", gender) { gender = it }
+                Spacer(Modifier.width(16.dp))
+                GenderRadio("Female", gender) { gender = it }
             }
 
             Spacer(Modifier.height(10.dp))
-
-            Row {
-                Text(
-                    text = stringResource(Res.string.don_t_have_account),
-                    color = Color.Black,
-                    fontSize = 11.ssp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Spacer(modifier = Modifier.width(2.sdp))
-                Text(
-                    modifier = Modifier.clickable {
-                        actionEvent.invoke(SignInViewModel.ActionEvent.OnSignUpClick)
-                    },
-                    text = stringResource(Res.string.sign_up),
-                    color = Color.Blue,
-                    fontSize = 11.ssp,
-                    fontWeight = FontWeight.SemiBold
-                )
+            Button(
+                onClick = { actionEvent.invoke(SignupViewModel.ActionEvent.OnSignUpClick) },
+                modifier = Modifier.fillMaxWidth().height(50.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF6B5F))
+            ) {
+                Text(text = state.signUp, color = Color.White, fontWeight = FontWeight.Bold)
             }
+
+            Spacer(Modifier.height(20.dp))
+            TermsAndConditionsText()
+
+            Spacer(Modifier.height(5.dp))
+            SignUpText(onSigninClick = {
+                actionEvent.invoke(SignupViewModel.ActionEvent.OnSignUpClick)
+            })
         }
     }
 
 }
-
-

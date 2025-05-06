@@ -16,7 +16,7 @@ class SplashViewModel : BaseViewModel() {
         private set
 
     private val currentUser = if (PlatformUtils.isAndroid()) Firebase.auth.currentUser else null
-    private val startPoint = if (currentUser != null) Route.WelcomeScreen else Route.SignIn
+    private val startPoint = if (currentUser != null) Route.WelcomeDisplay else Route.SignIn
 
     fun actionEvent(actionEvent: ActionEvent) {
         when (actionEvent) {

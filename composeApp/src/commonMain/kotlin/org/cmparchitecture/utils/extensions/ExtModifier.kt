@@ -2,7 +2,6 @@ package org.cmparchitecture.utils.extensions
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
@@ -22,8 +21,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.cmparchitecture.utils.network.SCREEN_HORIZONTAL_PADDING
-import org.core.theme.utils.sdp
+import org.cmparchitecture.utils.sdp
 
 @Composable
 fun Modifier.safeDrawingPaddingTop(): Modifier {
@@ -34,14 +32,6 @@ fun Modifier.safeDrawingPaddingTop(): Modifier {
     )
 }
 
-@Composable
-fun Modifier.defaultHorizontalPadding() = this
-    .padding(
-        PaddingValues(
-            start = SCREEN_HORIZONTAL_PADDING.sdp,
-            end = SCREEN_HORIZONTAL_PADDING.sdp,
-        )
-    )
 
 @Composable
 fun Modifier.hideKeyboardOnTap(): Modifier {

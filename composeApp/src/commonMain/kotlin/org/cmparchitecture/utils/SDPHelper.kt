@@ -1,4 +1,4 @@
-package org.core.theme.utils
+package org.cmparchitecture.utils
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -7,8 +7,8 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import org.core.theme.extensions.screenHeight
-import org.core.theme.extensions.screenWidth
+import org.cmparchitecture.utils.extensions.screenHeight
+import org.cmparchitecture.utils.extensions.screenWidth
 
 val Int.sdp: Dp
     @Composable
@@ -20,7 +20,7 @@ val Int.ssp: TextUnit
 @Composable
 fun Int.sdpGet(): Dp {
     val minValue = kotlin.math.min(getScreenHeight(), getScreenWidth())
-    val ratio = minValue / 412.0 // Adjusted baseline for mobile (common 360dp width)
+    val ratio = minValue / 412.0
     return (this * ratio).dp
 }
 
@@ -56,5 +56,5 @@ fun Int.pxToDp(): Dp {
 
 @Composable
 fun Int.pxToSdp(): Dp {
-    return this.pxToDp().value.toInt().sdp // Convert px → dp → scaled sdp
+    return this.pxToDp().value.toInt().sdp
 }

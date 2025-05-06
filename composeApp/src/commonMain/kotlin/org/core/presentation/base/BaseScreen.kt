@@ -24,11 +24,9 @@ import androidx.compose.ui.layout.ContentScale
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import org.cmparchitecture.navigation.NavigationAction
-import org.cmparchitecture.presentation.component.MessageBottomSheet
 import org.cmparchitecture.showToast
 import org.cmparchitecture.utils.extensions.safeDrawingPaddingTop
-import org.core.theme.theme.apptheme.GoldMangColor
-import org.core.theme.utils.sdp
+import org.cmparchitecture.utils.sdp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -65,24 +63,6 @@ fun BaseScreen(
             .then(if (safePadding) Modifier.safeDrawingPaddingTop() else Modifier)
     ) {
         content()
-
-        if (showAlertBottomSheet) {
-            MessageBottomSheet(
-                icon = {
-                    Icon(
-                        imageVector = Icons.Default.Info, // Change to Icons.Default.Error for error
-                        contentDescription = "Success",
-                        tint = Color.Black,
-                        modifier = Modifier.size(50.sdp)
-                    )
-                },
-                title = "Alert",
-                message = alertMsg,
-                onDismiss = {
-                    showAlertBottomSheet = false
-                }
-            )
-        }
 
         if (isLoading) {
             IndeterminateCircularIndicator(
@@ -128,7 +108,7 @@ fun IndeterminateCircularIndicator(
 ) {
     CircularProgressIndicator(
         modifier = modifier.width(50.sdp),
-        color = GoldMangColor.black,
-        trackColor = GoldMangColor.white,
+        color = Color.Black,
+        trackColor = Color.White,
     )
 }

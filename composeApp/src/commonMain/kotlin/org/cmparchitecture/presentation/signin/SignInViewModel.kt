@@ -12,6 +12,7 @@ import org.cmparchitecture.navigation.Route
 import org.core.presentation.base.BaseViewModel
 
 class SignInViewModel(private val repo: AuthRepo) : BaseViewModel() {
+
     var state by mutableStateOf(SignInScreenState())
         private set
 
@@ -43,7 +44,7 @@ class SignInViewModel(private val repo: AuthRepo) : BaseViewModel() {
                 if (isSuccess) {
                     navigate(
                         NavigationAction.NavigateTo(
-                            Route.SignUpDisplay,
+                            Route.WelcomeDisplay,
                             clearBackStack = true
                         )
                     )

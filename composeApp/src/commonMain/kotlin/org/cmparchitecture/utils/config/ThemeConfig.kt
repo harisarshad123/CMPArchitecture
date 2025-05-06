@@ -1,4 +1,4 @@
-package org.core.theme.config
+package org.cmparchitecture.utils.config
 
 object ThemeConfig {
     var IS_RESPONSIVE = false

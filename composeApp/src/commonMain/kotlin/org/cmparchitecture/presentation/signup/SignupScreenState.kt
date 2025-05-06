@@ -1,8 +1,8 @@
-package org.cmparchitecture.presentation.dashboard
+package org.cmparchitecture.presentation.signup
 
 import androidx.compose.ui.text.input.TextFieldValue
 
-data class DashboardScreenState(
+data class SignupScreenState(
     val title: String = "Sign Up Screen",
     val email: TextFieldValue = TextFieldValue(),
     val password: TextFieldValue = TextFieldValue(),

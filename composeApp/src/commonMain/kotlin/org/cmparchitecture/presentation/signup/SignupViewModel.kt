@@ -1,4 +1,4 @@
-package org.cmparchitecture.presentation.dashboard
+package org.cmparchitecture.presentation.signup
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,8 +11,8 @@ import org.cmparchitecture.navigation.NavigationAction
 import org.cmparchitecture.navigation.Route
 import org.core.presentation.base.BaseViewModel
 
-class DashboardViewModel(private val repo: AuthRepo) : BaseViewModel() {
-    var state by mutableStateOf(DashboardScreenState())
+class SignupViewModel(private val repo: AuthRepo) : BaseViewModel() {
+    var state by mutableStateOf(SignupScreenState())
         private set
 
 
@@ -60,7 +60,7 @@ class DashboardViewModel(private val repo: AuthRepo) : BaseViewModel() {
                 if (isSuccess) {
                     navigate(
                         NavigationAction.NavigateTo(
-                            Route.WelcomeScreen,
+                            Route.WelcomeDisplay,
                             clearBackStack = true
                         )
                     )

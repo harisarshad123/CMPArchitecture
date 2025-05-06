@@ -18,8 +18,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import org.cmparchitecture.navigation.NavigationAction
 import org.cmparchitecture.presentation.component.BaseButton
+import org.cmparchitecture.utils.sdp
+import org.core.presentation.base.BaseScreen
 import org.core.presentation.base.BaseViewModel
-import org.core.theme.utils.sdp
 
 @Composable
 fun WelcomeScreen(
@@ -27,43 +28,46 @@ fun WelcomeScreen(
     state: WelcomeScreenState = WelcomeScreenState(),
     actionEvent: (WelcomeScreenViewModel.ActionEvent) -> Unit = {},
     baseUIEvents: SharedFlow<BaseViewModel.BaseViewModelEvents> = MutableSharedFlow()
+) {
+    BaseScreen(
+        baseUIEvents = baseUIEvents,
+        navigation = navigation
+    ){
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    modifier = Modifier.padding(10.dp),
+                    text = state.title,
+                    fontSize = 20.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
-    ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                modifier = Modifier.padding(10.dp),
-                text = state.title,
-                fontSize = 20.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 20.sdp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ){
-            BaseButton(
-                text = "Sign Out",
-                onClick = {
-                    actionEvent.invoke(WelcomeScreenViewModel.ActionEvent.OnSignOutClick)
-                },
-                modifier = Modifier.fillMaxWidth(),
-                enable = true,
-                backgroundColor = Color.Blue,
-                textColor = Color.White,
-            )
+            Column (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.sdp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ){
+                BaseButton(
+                    text = "Sign Out",
+                    onClick = {
+                        actionEvent.invoke(WelcomeScreenViewModel.ActionEvent.OnSignOutClick)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    enable = true,
+                    backgroundColor = Color.Blue,
+                    textColor = Color.White,
+                )
+            }
         }
     }
-
 
 }

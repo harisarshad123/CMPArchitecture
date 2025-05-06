@@ -11,8 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.cmparchitecture.presentation.dashboard.DashboardViewModel
-import org.cmparchitecture.presentation.dashboard.SignUpScreen
+import org.cmparchitecture.presentation.signup.SignupViewModel
+import org.cmparchitecture.presentation.signup.SignUpScreen
 import org.cmparchitecture.presentation.signin.SignInScreen
 import org.cmparchitecture.presentation.signin.SignInViewModel
 import org.cmparchitecture.presentation.splash.SplashScreen
@@ -29,7 +29,7 @@ fun SetUpNavGraph(
         modifier = Modifier.fillMaxSize()
             .background(color = Color.White),
         navController = navController,
-        startDestination = Route.SignIn,
+        startDestination = Route.SplashDisplay,
 
         enterTransition = {
             slideIntoContainer(
@@ -57,7 +57,7 @@ fun SetUpNavGraph(
         }
     ) {
         composable<Route.SignUpDisplay> {
-            val viewModel = koinViewModel<DashboardViewModel>()
+            val viewModel = koinViewModel<SignupViewModel>()
             SignUpScreen(
                 state = viewModel.state,
                 actionEvent = viewModel::actionEvent,
@@ -86,7 +86,7 @@ fun SetUpNavGraph(
             )
         }
 
-        composable<Route.WelcomeScreen> {
+        composable<Route.WelcomeDisplay> {
             val viewModel = koinViewModel<WelcomeScreenViewModel>()
             WelcomeScreen(
                 state = viewModel.state,
